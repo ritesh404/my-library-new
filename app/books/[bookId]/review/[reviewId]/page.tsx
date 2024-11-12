@@ -1,5 +1,5 @@
 "use client";
-import { REVIEWS_QUERY } from "@/lib/gql/review";
+import { REVIEW_QUERY } from "@/lib/gql/review";
 import { useQuery } from "@apollo/client";
 import Link from "next/link";
 
@@ -25,7 +25,7 @@ export default function ReviewPage({
 }: {
   params: { bookId: string; reviewId: string };
 }) {
-  const { data, loading, error } = useQuery(REVIEWS_QUERY, {
+  const { data, loading, error } = useQuery(REVIEW_QUERY, {
     variables: { id: params.reviewId },
   });
 

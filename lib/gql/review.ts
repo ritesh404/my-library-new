@@ -8,6 +8,22 @@ export const REVIEWS_QUERY = gql`
         bookId
         reviewerName
         rating
+        createdAt
+        updatedAt
+      }
+      count
+    }
+  }
+`;
+
+export const REVIEW_QUERY = gql`
+  query Review($bookId: ID, $id: ID, $limit: Int, $offset: Int) {
+    reviews(bookId: $bookId, id: $id, limit: $limit, offset: $offset) {
+      reviews {
+        id
+        bookId
+        reviewerName
+        rating
         review
         createdAt
         updatedAt

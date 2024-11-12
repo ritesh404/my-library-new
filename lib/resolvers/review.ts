@@ -1,4 +1,7 @@
+import { createReviewLoader } from "../dataloaders/reviewLoader";
 import { Review } from "../models/review";
+
+const reviewLoader = createReviewLoader();
 
 export async function reviewQueryResolver(
   _parent: unknown,
@@ -14,9 +17,15 @@ export async function reviewQueryResolver(
     offset?: number;
   }
 ) {
+  if (id) {
+    const review = await reviewLoader.load(id);
+    return {
+      reviews: review ? [review] : [],
+      count: review ? 1 : 0,
+    };
+  }
   const query: any = {};
   if (bookId) query.bookId = bookId;
-  if (id) query._id = id;
 
   const count = await Review.countDocuments(query);
   const reviews = await Review.find(query)

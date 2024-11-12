@@ -65,25 +65,24 @@ export default function Page({ params }: { params: { bookId: string } }) {
             Published Date:{" "}
             {new Date(Number(published_date)).toLocaleDateString()}
           </p>
-          <p className="text-gray-700 mb-4">{description}</p>
-
           {author && (
             <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-2">Author:</h2>
+              <h2 className="text-sm font-semibold">Author:</h2>
               <Link
                 href={`/authors/${author.id}`}
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 hover:underline text-sm"
               >
                 {author.name}
               </Link>
             </div>
           )}
+          <p className="text-gray-700 mb-4">{description}</p>
         </div>
       </div>
 
       <div className="mt-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold">Reviews</h2>
+          <h2 className="text-xl font-semibold">Reviews</h2>
           <Link
             href={`/books/${bookId}/review`}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -102,10 +101,8 @@ export default function Page({ params }: { params: { bookId: string } }) {
                 <Link href={`/books/${bookId}/review/${review.id}`}>
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-semibold text-lg">
-                        {review.reviewerName}
-                      </h3>
-                      <p className="text-sm text-gray-500">
+                      <h3 className="font-semibold">{review.reviewerName}</h3>
+                      <p className="text-xs text-gray-500">
                         {new Date(
                           Number(review.createdAt)
                         ).toLocaleDateString()}
