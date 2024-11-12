@@ -21,6 +21,10 @@ export const Author = sequelize.define(
     born_date: {
       type: DataTypes.DATE,
     },
+    image_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     tableName: "authors",

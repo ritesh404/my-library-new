@@ -1,4 +1,4 @@
-export async function handleFileUpload(file: File) {
+export async function handleImageUpload(file: File) {
   //   event.preventDefault();
 
   // const fileInput = document.querySelector('#fileInput');

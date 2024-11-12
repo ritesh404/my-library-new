@@ -9,7 +9,6 @@ export async function POST(request: Request) {
   }
 
   const url = await uploadToCloudinary(file);
-  console.log(url);
 
   return NextResponse.json({ success: true, url });
 }

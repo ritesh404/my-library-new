@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import Modal from "./Modal";
 import { AUTHORS_QUERY, CREATE_AUTHOR, UPDATE_AUTHOR } from "@/lib/gql/author";
 import { Author } from "@/lib/types/author";
+import { handleImageUpload } from "@/lib/util/uploader";
 
 interface AuthorModalProps {
   onAuthorSuccess: (author: {
@@ -29,6 +30,11 @@ const AuthorForm = ({
       ? new Date(Number(author.born_date)).toISOString().slice(0, 10)
       : ""
   );
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>(
+    author?.image_url || ""
+  );
+  const [isUploading, setIsUploading] = useState(false);
 
   const [createAuthor, { loading: isCreating }] = useMutation(CREATE_AUTHOR, {
     refetchQueries: [{ query: AUTHORS_QUERY }],
@@ -38,10 +44,27 @@ const AuthorForm = ({
     refetchQueries: [{ query: AUTHORS_QUERY }],
   });
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsUploading(true);
 
     try {
+      let imageUrl = author?.image_url;
+
+      if (imageFile) {
+        const imageResp = await handleImageUpload(imageFile);
+        if (imageResp.success) imageUrl = imageResp.url;
+      }
+
       if (author) {
         const { data } = await updateAuthor({
           variables: {
@@ -49,6 +72,7 @@ const AuthorForm = ({
             name,
             biography,
             born_date: bornDate,
+            image_url: imageUrl,
           },
         });
         onCreateAuthorSuccess(data.updateAuthor);
@@ -58,20 +82,43 @@ const AuthorForm = ({
             name,
             biography,
             born_date: bornDate,
+            image_url: imageUrl,
           },
         });
         onCreateAuthorSuccess(data.createAuthor);
       }
-      // Clear form after submission
     } catch (error) {
-      console.error("Error creating author:", error);
+      console.error("Error creating/updating author:", error);
       onCreateAuthorFailure();
+    } finally {
+      setIsUploading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="p-4 w-full">
-      <h2 className="text-2xl font-bold mb-4">Create New Author</h2>
+      <h2 className="text-2xl font-bold mb-4">
+        {author ? "Edit Author" : "Create New Author"}
+      </h2>
+
+      <div className="mb-4">
+        <label className="block mb-2">Profile Image</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="w-full p-2 border rounded"
+        />
+        {imagePreview && (
+          <div className="mt-2">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-32 h-32 object-cover rounded"
+            />
+          </div>
+        )}
+      </div>
 
       <div className="mb-4">
         <label className="block mb-2">Name</label>
@@ -104,14 +151,14 @@ const AuthorForm = ({
           className="w-full p-2 border rounded"
         />
       </div>
-      {isCreating || isUpdating ? (
+      {isCreating || isUpdating || isUploading ? (
         <div className="text-center">Please wait...</div>
       ) : (
         <>
           <button
             type="submit"
             className="px-4 py-2 mt-4 bg-blue-500 text-white rounded"
-            disabled={isCreating || isUpdating}
+            disabled={isCreating || isUpdating || isUploading}
           >
             {author ? "Update" : "Create"}
           </button>

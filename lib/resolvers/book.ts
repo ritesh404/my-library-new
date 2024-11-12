@@ -2,8 +2,9 @@ import { Op, WhereOptions } from "sequelize";
 import { Book } from "../models/book";
 import { Author } from "../models/author";
 import { createBookLoader } from "../dataloaders/bookLoader";
+import { authorLoader } from "./author";
 
-const bookLoader = createBookLoader();
+export const bookLoader = createBookLoader();
 
 export async function bookQueryResolver(
   _parent: unknown,
@@ -94,6 +95,7 @@ export async function createBookMutationResolver(
       author_id,
       image_url,
     });
+    authorLoader.clear(author_id);
     return newBook;
   } catch (error) {
     console.error("Error creating book:", error);
@@ -136,6 +138,7 @@ export async function updateBookMutationResolver(
     );
 
     bookLoader.clear(id);
+    authorLoader.clear(author_id);
     const book = await bookLoader.load(id);
     return book;
   } catch (error) {

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { BOOKS_QUERY, CREATE_BOOK, UPDATE_BOOK } from "@/lib/gql/book";
 import { Book } from "@/lib/types/book";
-import { handleFileUpload } from "@/lib/util/uploader";
+import { handleImageUpload } from "@/lib/util/uploader";
 
 interface BookModalProps {
   book?: Book;
@@ -60,14 +60,12 @@ const BookForm = ({
 
       // Upload new image if selected
       if (imageFile) {
-        const imageResp = await handleFileUpload(imageFile);
-        console.log(imageResp);
+        const imageResp = await handleImageUpload(imageFile);
+
         if (imageResp.success) {
           imageUrl = imageResp.url;
         }
       }
-
-      console.log(imageUrl);
 
       if (book) {
         const { data } = await updateBook({

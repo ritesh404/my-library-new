@@ -3,7 +3,7 @@ import { Author } from "../models/author";
 import { Book } from "../models/book";
 import { createAuthorLoader } from "../dataloaders/authorLoader";
 
-const authorLoader = createAuthorLoader();
+export const authorLoader = createAuthorLoader();
 
 export async function authorQueryResolver(
   _parent: unknown,
@@ -66,10 +66,12 @@ export async function createAuthorMutationResolver(
     name,
     biography,
     born_date,
+    image_url,
   }: {
     name: string;
     biography: string;
     born_date: string;
+    image_url: string;
   }
 ) {
   try {
@@ -77,6 +79,7 @@ export async function createAuthorMutationResolver(
       name,
       biography,
       born_date,
+      image_url,
     });
     return newAuthor;
   } catch (error) {
@@ -92,11 +95,13 @@ export async function updateAuthorMutationResolver(
     name,
     biography,
     born_date,
+    image_url,
   }: {
     id: string;
     name: string;
     biography: string;
     born_date: string;
+    image_url: string;
   }
 ) {
   try {
@@ -105,6 +110,7 @@ export async function updateAuthorMutationResolver(
         name,
         biography,
         born_date,
+        image_url,
       },
       {
         where: {

@@ -30,13 +30,26 @@ export default function Page({ params }: { params: { authorId: string } }) {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">{name}</h1>
-      {born_date && (
-        <p className="text-gray-600 mb-6 text-sm">
-          Born: {new Date(Number(born_date)).toLocaleDateString()}
-        </p>
-      )}
-      {biography && <p className="text-gray-700 mb-6">{biography}</p>}
+      <div className="flex gap-8 mb-6">
+        {data.authors.authors[0].image_url && (
+          <div className="flex-shrink-0">
+            <img
+              src={data.authors.authors[0].image_url}
+              alt={name}
+              className="w-48 h-48 object-cover rounded-lg shadow-lg"
+            />
+          </div>
+        )}
+        <div>
+          <h1 className="text-3xl font-bold mb-4">{name}</h1>
+          {born_date && (
+            <p className="text-gray-600 mb-6 text-sm">
+              Born: {new Date(Number(born_date)).toLocaleDateString()}
+            </p>
+          )}
+          {biography && <p className="text-gray-700 mb-6">{biography}</p>}
+        </div>
+      </div>
       <div className="my-6">
         <button
           onClick={() => setShowBookModal(true)}

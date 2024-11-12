@@ -3,4 +3,5 @@ export interface Author {
   name: string;
   biography?: string;
   born_date?: string;
+  image_url?: string;
 }

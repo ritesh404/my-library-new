@@ -20,6 +20,7 @@ export const AUTHORS_QUERY = gql`
         name
         biography
         born_date
+        image_url
         books {
           id
           title
@@ -37,12 +38,19 @@ export const CREATE_AUTHOR = gql`
     $name: String!
     $biography: String
     $born_date: String
+    $image_url: String
   ) {
-    createAuthor(name: $name, biography: $biography, born_date: $born_date) {
+    createAuthor(
+      name: $name
+      biography: $biography
+      born_date: $born_date
+      image_url: $image_url
+    ) {
       id
       name
       biography
       born_date
+      image_url
     }
   }
 `;
@@ -53,17 +61,20 @@ export const UPDATE_AUTHOR = gql`
     $name: String!
     $biography: String
     $born_date: String
+    $image_url: String
   ) {
     updateAuthor(
       id: $id
       name: $name
       biography: $biography
       born_date: $born_date
+      image_url: $image_url
     ) {
       id
       name
       biography
       born_date
+      image_url
     }
   }
 `;
