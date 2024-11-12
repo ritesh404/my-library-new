@@ -184,7 +184,21 @@ const Authors = () => {
                     className="border-y pl-8 border-l border-slate-100 p-4 text-slate-500 hover:underline cursor-pointer"
                     onClick={() => router.push(`/authors/${author.id}`)}
                   >
-                    {author.name}
+                    <div className="flex gap-4 items-center">
+                      <div className="w-12">
+                        {author.image_url ? (
+                          <img
+                            src={author.image_url}
+                            className="w-12 h-12 object-cover rounded-lg shadow-sm"
+                            title={author.name}
+                            alt={author.name}
+                          ></img>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <span>{author.name}</span>
+                    </div>
                   </td>
                   <td className="border-y flex gap-4 justify-end border-slate-100 p-4 text-slate-500">
                     <button
