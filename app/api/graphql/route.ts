@@ -1,4 +1,3 @@
-// pages/api/graphql.js
 import { connectToMongo } from "@/lib/db/mongo";
 import { connectToPostgres } from "@/lib/db/postgres";
 import {
