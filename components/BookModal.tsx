@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { BOOKS_QUERY, CREATE_BOOK, UPDATE_BOOK } from "@/lib/gql/book";
 import { Book } from "@/lib/types/book";
+import { handleFileUpload } from "@/lib/util/uploader";
 
 interface BookModalProps {
   book?: Book;
@@ -26,6 +27,11 @@ const BookForm = ({
       ? new Date(Number(book.published_date)).toISOString().slice(0, 10)
       : ""
   );
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>(
+    book?.image_url || ""
+  );
+  const [isUploading, setIsUploading] = useState(false);
 
   const [createBook, { loading: isCreating }] = useMutation(CREATE_BOOK, {
     refetchQueries: [{ query: BOOKS_QUERY }],
@@ -35,10 +41,34 @@ const BookForm = ({
     refetchQueries: [{ query: BOOKS_QUERY }],
   });
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsUploading(true);
 
     try {
+      let imageUrl = book?.image_url;
+
+      // Upload new image if selected
+      if (imageFile) {
+        const imageResp = await handleFileUpload(imageFile);
+        console.log(imageResp);
+        if (imageResp.success) {
+          imageUrl = imageResp.url;
+        }
+      }
+
+      console.log(imageUrl);
+
       if (book) {
         const { data } = await updateBook({
           variables: {
@@ -47,6 +77,7 @@ const BookForm = ({
             description,
             published_date: publishedDate,
             author_id: book.author.id,
+            image_url: imageUrl,
           },
         });
         onBookSuccess(data.updateBook);
@@ -57,13 +88,16 @@ const BookForm = ({
             description,
             published_date: publishedDate,
             author_id: selectedAuthorID,
+            image_url: imageUrl,
           },
         });
         onBookSuccess(data.createBook);
       }
     } catch (error) {
-      console.error("Error creating book:", error);
+      console.error("Error creating/updating book:", error);
       onBookFailure();
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -104,7 +138,27 @@ const BookForm = ({
         />
       </div>
 
-      {isCreating || isUpdating ? (
+      {/* Add image upload section */}
+      <div className="mb-4">
+        <label className="block mb-2">Cover Image</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="w-full p-2 border rounded"
+        />
+        {imagePreview && (
+          <div className="mt-2">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-32 object-cover rounded"
+            />
+          </div>
+        )}
+      </div>
+
+      {isCreating || isUpdating || isUploading ? (
         <div className="text-center">Please wait...</div>
       ) : (
         <>

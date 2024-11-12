@@ -3,10 +3,13 @@ import { AUTHORS_QUERY } from "@/lib/gql/author";
 import { Book } from "@/lib/types/book";
 import { useQuery } from "@apollo/client";
 import Link from "next/link";
+import { useState } from "react";
+import BookModal from "@/components/BookModal";
 
 export default function Page({ params }: { params: { authorId: string } }) {
   const authorId = params.authorId;
-  const { data, loading, error } = useQuery(AUTHORS_QUERY, {
+  const [showBookModal, setShowBookModal] = useState(false);
+  const { data, loading, error, refetch } = useQuery(AUTHORS_QUERY, {
     variables: {
       id: authorId,
     },
@@ -34,6 +37,14 @@ export default function Page({ params }: { params: { authorId: string } }) {
         </p>
       )}
       {biography && <p className="text-gray-700 mb-6">{biography}</p>}
+      <div className="my-6">
+        <button
+          onClick={() => setShowBookModal(true)}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Add Book
+        </button>
+      </div>
 
       {sortedBooks && sortedBooks.length > 0 && (
         <div className="mb-6">
@@ -50,7 +61,7 @@ export default function Page({ params }: { params: { authorId: string } }) {
                   </h3>
                   <p className="text-gray-600 mt-1">
                     Published:{" "}
-                    {new Date(book.published_date).toLocaleDateString()}
+                    {new Date(Number(book.published_date)).toLocaleDateString()}
                   </p>
                 </Link>
               </div>
@@ -65,6 +76,20 @@ export default function Page({ params }: { params: { authorId: string } }) {
       >
         Back to Authors
       </Link>
+
+      {showBookModal && (
+        <BookModal
+          selectedAuthorID={authorId}
+          onBookSuccess={() => {
+            refetch();
+            setShowBookModal(false);
+          }}
+          onBookFailure={() => {
+            setShowBookModal(false);
+          }}
+          onCancel={() => setShowBookModal(false)}
+        />
+      )}
     </div>
   );
 }

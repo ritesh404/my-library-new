@@ -157,13 +157,25 @@ const Books = () => {
               <tbody className="bg-white ">
                 {data?.books.books.map((book: Book) => (
                   <tr key={book.id}>
-                    <td
-                      className="border-y pl-8 border-l border-slate-100 p-4 text-slate-500 cursor-pointer"
-                      onClick={() => {
-                        router.push(`/books/${book.id}`);
-                      }}
-                    >
-                      {book.title}
+                    <td className="border-y border-l border-slate-100 p-4 text-slate-500">
+                      <div
+                        className="flex gap-4 cursor-pointer"
+                        onClick={() => router.push(`/books/${book.id}`)}
+                      >
+                        {book.image_url && (
+                          <img
+                            src={book.image_url}
+                            alt={book.title}
+                            className="w-16 object-cover rounded"
+                          />
+                        )}
+                        <div className="flex flex-col gap-2">
+                          <span className="font-semibold">{book.title}</span>
+                          <span className="text-sm ">
+                            by {book.author.name}
+                          </span>
+                        </div>
+                      </div>
                     </td>
                     <td className="border-y flex gap-4 justify-end border-slate-100 p-4 text-slate-500">
                       <button

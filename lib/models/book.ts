@@ -31,6 +31,10 @@ export const Book = sequelize.define(
       },
       onDelete: "CASCADE", // Books get deleted if an author is deleted
     },
+    image_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     tableName: "books",

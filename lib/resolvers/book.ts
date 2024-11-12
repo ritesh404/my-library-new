@@ -77,11 +77,13 @@ export async function createBookMutationResolver(
     description,
     published_date,
     author_id,
+    image_url,
   }: {
     title: string;
     description: string;
     published_date: string;
     author_id: string;
+    image_url: string;
   }
 ) {
   try {
@@ -90,6 +92,7 @@ export async function createBookMutationResolver(
       description,
       published_date,
       author_id,
+      image_url,
     });
     return newBook;
   } catch (error) {
@@ -106,12 +109,14 @@ export async function updateBookMutationResolver(
     description,
     published_date,
     author_id,
+    image_url,
   }: {
     id: string;
     title: string;
     description: string;
     published_date: string;
     author_id: string;
+    image_url: string;
   }
 ) {
   try {
@@ -121,6 +126,7 @@ export async function updateBookMutationResolver(
         description,
         published_date,
         author_id,
+        image_url,
       },
       {
         where: {

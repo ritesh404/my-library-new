@@ -49,23 +49,37 @@ export default function Page({ params }: { params: { bookId: string } }) {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">{title}</h1>
-      <p className="text-sm mb-2">
-        Published Date: {new Date(published_date).toLocaleDateString()}
-      </p>
-      <p className="text-gray-700 mb-4">{description}</p>
+      <div className="flex gap-8 mb-6">
+        {bookData.books.books[0].image_url && (
+          <div className="flex-shrink-0">
+            <img
+              src={bookData.books.books[0].image_url}
+              alt={title}
+              className="w-48 h-64 object-cover rounded-lg shadow-lg"
+            />
+          </div>
+        )}
+        <div>
+          <h1 className="text-3xl font-bold mb-4">{title}</h1>
+          <p className="text-sm mb-2">
+            Published Date:{" "}
+            {new Date(Number(published_date)).toLocaleDateString()}
+          </p>
+          <p className="text-gray-700 mb-4">{description}</p>
 
-      {author && (
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-2">Author:</h2>
-          <Link
-            href={`/authors/${author.id}`}
-            className="text-blue-500 hover:underline"
-          >
-            {author.name}
-          </Link>
+          {author && (
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Author:</h2>
+              <Link
+                href={`/authors/${author.id}`}
+                className="text-blue-500 hover:underline"
+              >
+                {author.name}
+              </Link>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       <div className="mt-8">
         <div className="flex justify-between items-center mb-4">

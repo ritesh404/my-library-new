@@ -24,6 +24,7 @@ export const BOOKS_QUERY = gql`
         title
         description
         published_date
+        image_url
         author {
           id
           name
@@ -40,16 +41,19 @@ export const CREATE_BOOK = gql`
     $description: String
     $published_date: String
     $author_id: String!
+    $image_url: String
   ) {
     createBook(
       title: $title
       description: $description
       published_date: $published_date
       author_id: $author_id
+      image_url: $image_url
     ) {
       id
       title
       description
+      image_url
     }
   }
 `;
@@ -61,6 +65,7 @@ export const UPDATE_BOOK = gql`
     $description: String
     $published_date: String
     $author_id: String
+    $image_url: String
   ) {
     updateBook(
       id: $id
@@ -68,10 +73,12 @@ export const UPDATE_BOOK = gql`
       description: $description
       published_date: $published_date
       author_id: $author_id
+      image_url: $image_url
     ) {
       id
       title
       description
+      image_url
     }
   }
 `;
