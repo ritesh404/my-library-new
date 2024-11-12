@@ -3,7 +3,7 @@ import { BOOKS_QUERY, DELETE_BOOK } from "@/lib/gql/book";
 import { Book } from "@/lib/types/book";
 import { useMutation, useQuery } from "@apollo/client";
 import { useSearchParams, useRouter } from "next/navigation";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import Pagination from "./Pagination";
 import Modal from "./Modal";
 import BookModal from "./BookModal";
