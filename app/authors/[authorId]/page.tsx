@@ -61,7 +61,7 @@ export default function Page({ params }: { params: { authorId: string } }) {
 
       {sortedBooks && sortedBooks.length > 0 && (
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold mb-4">Published Books</h2>
+          <h2 className="text-lg font-semibold mb-4">Published Books</h2>
           <div className="grid gap-4">
             {sortedBooks.map((book: Book) => (
               <div
@@ -69,10 +69,10 @@ export default function Page({ params }: { params: { authorId: string } }) {
                 className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
               >
                 <Link href={`/books/${book.id}`} className="block">
-                  <h3 className="text-xl font-semibold text-blue-600 hover:text-blue-800">
+                  <h3 className="font-semibold text-blue-600 hover:text-blue-800">
                     {book.title}
                   </h3>
-                  <p className="text-gray-600 mt-1">
+                  <p className="text-gray-600 mt-1 text-xs">
                     Published:{" "}
                     {new Date(Number(book.published_date)).toLocaleDateString()}
                   </p>
