@@ -1,8 +1,4 @@
 export async function handleImageUpload(file: File) {
-  //   event.preventDefault();
-
-  // const fileInput = document.querySelector('#fileInput');
-  // const file = fileInput.files[0];
   if (!file) {
     console.error("No file selected");
     return;
@@ -20,9 +16,7 @@ export async function handleImageUpload(file: File) {
     if (response.ok) {
       const result = await response.json();
       return result;
-      //   console.log("Upload successful:", result);
     } else {
-      //   console.error("Upload failed:", response.statusText);
       return {
         success: false,
       };

@@ -13,7 +13,6 @@ export const tabs = [
 ];
 
 interface TabProps {
-  // onTabChange: (tab: (typeof tabs)[number]["label"]) => void;
   selectedTabId: (typeof tabs)[number]["label"];
 }
 

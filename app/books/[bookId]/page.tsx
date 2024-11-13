@@ -1,26 +1,10 @@
 "use client";
+import StarRating from "@/components/StarRating";
 import { BOOKS_QUERY } from "@/lib/gql/book";
 import { REVIEWS_QUERY } from "@/lib/gql/review";
 import { Review } from "@/lib/types/review";
 import { useQuery } from "@apollo/client";
 import Link from "next/link";
-
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center">
-      {[...Array(5)].map((_, index) => (
-        <span
-          key={index}
-          className={`text-xl ${
-            index < rating ? "text-yellow-400" : "text-gray-300"
-          }`}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-  );
-}
 
 export default function Page({ params }: { params: { bookId: string } }) {
   const bookId = params.bookId;
