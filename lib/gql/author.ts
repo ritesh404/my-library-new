@@ -80,7 +80,7 @@ export const UPDATE_AUTHOR = gql`
 `;
 
 export const DELETE_AUTHOR = gql`
-  mutation DelteAuthor($id: ID!) {
+  mutation DeleteAuthor($id: ID!) {
     deleteAuthor(id: $id) {
       id
       name
