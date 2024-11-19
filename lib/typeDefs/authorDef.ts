@@ -1,5 +1,5 @@
 export const authorType = `
- type Author {
+ type Author implements Node {
     id: ID!
     name: String!
     biography: String

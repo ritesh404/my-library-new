@@ -29,5 +29,14 @@ export const Author = sequelize.define(
   {
     tableName: "authors",
     timestamps: false,
+    indexes: [
+      {
+        fields: ["name"],
+        using: "GIN",
+      },
+      {
+        fields: ["born_date"],
+      },
+    ],
   }
 );

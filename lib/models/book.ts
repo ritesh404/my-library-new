@@ -39,6 +39,12 @@ export const Book = sequelize.define(
   {
     tableName: "books",
     timestamps: false,
+    indexes: [
+      {
+        fields: ["title"],
+        using: "GIN",
+      },
+    ],
   }
 );
 

@@ -1,5 +1,5 @@
 export const bookType = `
-type Book {
+type Book implements Node {
     id: ID!
     title: String!
     description: String

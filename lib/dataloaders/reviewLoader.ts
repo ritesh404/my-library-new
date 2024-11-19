@@ -14,7 +14,7 @@ export const createReviewLoader = () => {
       map[review.id] = review;
       return map;
     }, {} as Record<string, ReviewType>);
-    console.log(reviews, reviewMap);
+
     return ids.map((id) => reviewMap[id] || null);
   });
 };
