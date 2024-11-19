@@ -61,7 +61,6 @@ export async function bookQueryResolver(
     where,
     limit,
     offset,
-    include: [{ model: Author, as: "author" }],
     order: [["published_date", "DESC"]], // TODO: enable sorting in UI
   });
 

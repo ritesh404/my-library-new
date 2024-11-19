@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
-    bookId: {
+    book_id: {
       type: String,
       required: true,
       index: true,
     },
-    reviewerName: {
+    reviewer_name: {
       type: String,
       required: true,
     },

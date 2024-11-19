@@ -1,8 +1,8 @@
 export const reviewType = `
   type Review {
     id: ID!
-    bookId: ID!
-    reviewerName: String!
+    book_id: ID!
+    reviewer_name: String!
     rating: Int!
     review: String!
     createdAt: String!
@@ -17,13 +17,13 @@ export const reviewResponseType = `
   }`;
 
 export const reviewQuery = `
-    reviews(bookId: ID, id: ID, limit: Int, offset: Int): ReviewResponse!
+    reviews(book_id: ID, id: ID, limit: Int, offset: Int): ReviewResponse!
 `;
 
 export const reviewMutation = `
     createReview(
-      bookId: ID!
-      reviewerName: String!
+      book_id: ID!
+      reviewer_name: String!
       rating: Int!
       review: String!
     ): Review!

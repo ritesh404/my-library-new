@@ -25,7 +25,7 @@ export default function ReviewPage({
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold">
-              Review by {review.reviewerName}
+              Review by {review.reviewer_name}
             </h1>
             <StarRating rating={review.rating} />
           </div>

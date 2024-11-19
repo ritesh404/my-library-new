@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 
 export const REVIEWS_QUERY = gql`
-  query Reviews($bookId: ID, $id: ID, $limit: Int, $offset: Int) {
-    reviews(bookId: $bookId, id: $id, limit: $limit, offset: $offset) {
+  query Reviews($book_id: ID, $id: ID, $limit: Int, $offset: Int) {
+    reviews(book_id: $book_id, id: $id, limit: $limit, offset: $offset) {
       reviews {
         id
-        bookId
-        reviewerName
+        book_id
+        reviewer_name
         rating
         createdAt
         updatedAt
@@ -17,12 +17,12 @@ export const REVIEWS_QUERY = gql`
 `;
 
 export const REVIEW_QUERY = gql`
-  query Review($bookId: ID, $id: ID, $limit: Int, $offset: Int) {
-    reviews(bookId: $bookId, id: $id, limit: $limit, offset: $offset) {
+  query Review($book_id: ID, $id: ID, $limit: Int, $offset: Int) {
+    reviews(book_id: $book_id, id: $id, limit: $limit, offset: $offset) {
       reviews {
         id
-        bookId
-        reviewerName
+        book_id
+        reviewer_name
         rating
         review
         createdAt
@@ -35,19 +35,19 @@ export const REVIEW_QUERY = gql`
 
 export const CREATE_REVIEW = gql`
   mutation CreateReview(
-    $bookId: ID!
-    $reviewerName: String!
+    $book_id: ID!
+    $reviewer_name: String!
     $rating: Int!
     $review: String!
   ) {
     createReview(
-      bookId: $bookId
-      reviewerName: $reviewerName
+      book_id: $book_id
+      reviewer_name: $reviewer_name
       rating: $rating
       review: $review
     ) {
       id
-      reviewerName
+      reviewer_name
       rating
       review
       createdAt

@@ -19,7 +19,7 @@ export default function Page({ params }: { params: { bookId: string } }) {
   const { data: reviewsData, loading: reviewsLoading } = useQuery(
     REVIEWS_QUERY,
     {
-      variables: { bookId },
+      variables: { book_id: bookId },
     }
   );
 
@@ -85,7 +85,7 @@ export default function Page({ params }: { params: { bookId: string } }) {
                 <Link href={`/books/${bookId}/review/${review.id}`}>
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-semibold">{review.reviewerName}</h3>
+                      <h3 className="font-semibold">{review.reviewer_name}</h3>
                       <p className="text-xs text-gray-500">
                         {new Date(
                           Number(review.createdAt)

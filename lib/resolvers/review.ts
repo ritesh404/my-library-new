@@ -6,12 +6,12 @@ const reviewLoader = createReviewLoader();
 export async function reviewQueryResolver(
   _parent: unknown,
   {
-    bookId,
+    book_id,
     id,
     limit = 10,
     offset = 0,
   }: {
-    bookId?: string;
+    book_id?: string;
     id?: string;
     limit?: number;
     offset?: number;
@@ -25,7 +25,7 @@ export async function reviewQueryResolver(
     };
   }
   const query: any = {};
-  if (bookId) query.bookId = bookId;
+  if (book_id) query.book_id = book_id;
 
   const count = await Review.countDocuments(query);
   const reviews = await Review.find(query)
@@ -42,21 +42,21 @@ export async function reviewQueryResolver(
 export async function createReviewMutationResolver(
   _parent: unknown,
   {
-    bookId,
-    reviewerName,
+    book_id,
+    reviewer_name,
     rating,
     review,
   }: {
-    bookId: string;
-    reviewerName: string;
+    book_id: string;
+    reviewer_name: string;
     rating: number;
     review: string;
   }
 ) {
   try {
     const newReview = await Review.create({
-      bookId,
-      reviewerName,
+      book_id,
+      reviewer_name,
       rating,
       review,
     });

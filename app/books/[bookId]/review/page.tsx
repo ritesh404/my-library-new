@@ -10,7 +10,7 @@ export default function AddReviewPage({
   params: { bookId: string };
 }) {
   const router = useRouter();
-  const [reviewerName, setReviewerName] = useState("");
+  const [reviewer_name, setreviewer_name] = useState("");
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
 
@@ -21,8 +21,8 @@ export default function AddReviewPage({
     try {
       await createReview({
         variables: {
-          bookId: params.bookId,
-          reviewerName,
+          book_id: params.bookId,
+          reviewer_name,
           rating,
           review,
         },
@@ -43,8 +43,8 @@ export default function AddReviewPage({
           </label>
           <input
             type="text"
-            value={reviewerName}
-            onChange={(e) => setReviewerName(e.target.value)}
+            value={reviewer_name}
+            onChange={(e) => setreviewer_name(e.target.value)}
             required
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           />

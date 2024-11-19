@@ -1,6 +1,5 @@
 import { Op, WhereOptions } from "sequelize";
 import { Author } from "../models/author";
-import { Book } from "../models/book";
 import { createAuthorLoader } from "../dataloaders/authorLoader";
 
 export const authorLoader = createAuthorLoader();
@@ -50,7 +49,6 @@ export async function authorQueryResolver(
     where,
     limit,
     offset,
-    include: [{ model: Book, as: "books" }],
     order: [["name", "ASC"]], //TODO: enable sorting in UI
   });
 
